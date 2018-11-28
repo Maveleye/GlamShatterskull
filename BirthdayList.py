@@ -1,26 +1,26 @@
 #-----------------------------------
-# Libraries and References
+#   Import Libraries
 #-----------------------------------
 import os
 import json
 import codecs
 
 #-----------------------------------
-# [Required]	Script Information
+#   [Required] Script Information
 #-----------------------------------
 ScriptName = 'BirthdayList'
 Website = 'https://www.twitch.tv/maveleye'
 Creator = 'Maveleye'
-Version = 0.1
+Version = '0.1'
 Description = 'Query current month from a source to display all birthdays on stream.'
 
 #-----------------------------------
-# Set Variables
+#   Set Variables
 #-----------------------------------
 SettingsFile = os.path.join(os.path.dirname(__file__), 'settings.json')
 
 #-----------------------------------
-# Save/Load
+#   Save/Load
 #-----------------------------------
 
 class Settings():
@@ -29,7 +29,7 @@ class Settings():
         try:
             with codecs.open(settingsFile, encoding='utf-8-sig', mode='r') as f: self.__dict__ = json.load(f, encoding='utf-8')
         except:
-
+            return
 # TODO add except possibly command defaults
 
     def Reload(self, jsonData):
@@ -44,8 +44,37 @@ class Settings():
             Parent.Log(ScriptName, 'Failed to save settings to file.')
 
 #-----------------------------------
-# [Required] Intialize Data
+#   [Required] Intialize Data (Only called on load)
 #-----------------------------------
 def Init():
     global ScriptSettings
     ScriptSettings = Settings(settingsFile)
+    return
+
+#---------------------------------------
+#	[Required] Execute Data / Process Messages
+#---------------------------------------
+def Execute():
+    #   Check if the proper command is used, the command is not on cooldown, and the user has permission to use the command
+    if data.IsChatMessage() and data.GetParam(0).lower() == ScriptSettings.Command and not Parent.IsOnCooldown(
+            ScriptName, ScriptSettings.Command) and Parent.HasPermission(data.User, ScriptSettings.Permission,
+                                                                         ScriptSettings.Info):
+        Parent.SendStreamMessage(ScriptSettings.Response)  # Send your message to chat
+        Parent.AddCooldown(ScriptName, ScriptSettings.Command, ScriptSettings.Cooldown)  # Put the command on cooldown
+    return
+
+#---------------------------
+#   [Required] Tick method (Gets called during every iteration even when there is no incoming data)
+#---------------------------
+def Tick():
+    return
+
+
+# ---------------------------
+#   [Optional] Parse method (Allows you to create your own custom $parameters)
+# ---------------------------
+def Parse(parseString, userid, username, targetid, targetname, message):
+    if "$myparameter" in parseString:
+        return parseString.replace("$myparameter", "I am a cat!")
+
+    return parseString
