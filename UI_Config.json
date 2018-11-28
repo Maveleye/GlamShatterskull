@@ -1,0 +1,11 @@
+{
+  "output_file": "settings.json",
+  "OpenReadme": {
+    "type": "button",
+    "label": "Open Readme File",
+    "tooltip": "Opens the Readme File",
+    "function": "OpenReadMe",
+    "wsevent": "",
+    "group": "General"
+  }
+}
