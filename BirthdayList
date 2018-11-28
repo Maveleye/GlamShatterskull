@@ -1,2 +1,24 @@
 Link to Google Sheets
 https://docs.google.com/spreadsheets/d/1__9oPxk-jafal9-deYmnGvgMh2988lonRuCC7DO5PtM/edit?usp=sharing
+
+
+Birthday List Overlay
+
+Create Table
+	Name
+	Month
+	Day
+	Pkey
+
+Query Table - google api stuff
+
+Store items in list - sorted by date
+
+Display List
+
+Add items to table via chat command
+    only accept month name and date
+
+Set Usage restrictions - cooldown/onetime use
+
+Json with settings organization
